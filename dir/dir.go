@@ -7,25 +7,25 @@ import (
 	"path/filepath"
 )
 
-type dir string
+type Dir string
 
 // ChildDir only return the dir`s child,And not check the child is exist or is a dir
-func (d dir) ChildDir(child string) dir {
+func (d Dir) ChildDir(child string) Dir {
 	Sdir := string(d)
 	//path.Clean("/"+child) whill makesure the result can`t access dir`s parrent
 	p := filepath.Join(Sdir, filepath.FromSlash(path.Clean("/"+child)))
-	return dir(p)
+	return Dir(p)
 }
-func (d dir) ToString() string {
+func (d Dir) ToString() string {
 	return string(d)
 }
 
 // New will check path is exist,and must be a dir
-func New(path string) (dir, error) {
+func New(path string) (Dir, error) {
 	Sdir, _ := filepath.Abs(path)
 	if file.IsDir(Sdir) {
-		return dir(Sdir), nil
+		return Dir(Sdir), nil
 	}
-	return dir(""), errors.New(Sdir + "\tNot a Directory Or File Not Exist")
+	return Dir(""), errors.New(Sdir + "\tNot a Directory Or File Not Exist")
 
 }
